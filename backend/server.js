@@ -7,15 +7,18 @@ const dbConnect = require('./Config/dbConnect');
 dbConnect();
 
 
+const usersRoutes = require('./routes/usersRoute');
+
+//middleware
+app.use(express.json());
+
 //Routes
-app.use('/api/users/register', (req, res) => {
-    res.send('register Route')
-})
+app.use('/api', usersRoutes);
 
+
+//port
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
 
-//dLcXHZFGpnWTDqPX
