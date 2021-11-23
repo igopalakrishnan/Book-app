@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 
 
-router.use('/users/register', expressAsyncHandler(
+router.post('/users/register', expressAsyncHandler(
     async (req, res) => {
 
         const { name, email, password } = req.body;
@@ -23,6 +23,12 @@ router.use('/users/register', expressAsyncHandler(
         });
         res.send(userCreated);
     }
-))
+));
+
+
+router.post('/login', (req, res) => {
+
+    res.send('login');
+})
 
 module.exports = router;

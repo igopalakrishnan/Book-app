@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const dbConnect = () => {
 
-    mongoose.connect('mongodb+srv://gopalakrishna:dLcXHZFGpnWTDqPX@cluster0.r94d2.mongodb.net/book-app?retryWrites=true&w=majority', {
+    mongoose.connect('mongodb+srv://gopalakrishna:6EQxzeybyvzQ8o5N@cluster0.r94d2.mongodb.net/book-app?retryWrites=true&w=majority', {
         //useFindAndModify: true,
         //useCreateIndex: true,
         useUnifiedTopology: true,
@@ -12,4 +12,5 @@ const dbConnect = () => {
         .catch(err => console.log(err));
 }
 
-module.exports = dbConnect;
+module.exports = dbConnect; 
+
