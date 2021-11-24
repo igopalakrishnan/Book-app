@@ -12,7 +12,9 @@ const usersRoutes = require('./routes/usersRoute');
 
 //middleware
 app.use(express.json());
-app.use(error.errorHandler);
+
+//ErrorCatch
+app.use(error.errorMiddlewareHandler);
 
 //Routes
 app.use('/api', usersRoutes);

@@ -1,14 +1,13 @@
 const express = require('express');
-const expressAsyncHandler = require('express-async-handler');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const User = require('../models/User');
 
 
-router.post('/users/register', expressAsyncHandler(
+router.post('/users/register', asyncHandler(
     async (req, res) => {
 
         const { name, email, password } = req.body;
-
 
         const userExists = await User.findOne({ email: email });
 
@@ -26,9 +25,23 @@ router.post('/users/register', expressAsyncHandler(
 ));
 
 
-router.post('/login', (req, res) => {
+router.post('/login', asyncHandler(async (req, res) => {
 
-    res.send('login');
-})
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+        res.status(200).json({
+            _id: user._id,
+            name: user.name
+        })
+    } else {
+        res.status(401);
+
+        throw new Error('Invalid Credentials')
+    }
+
+}));
 
 module.exports = router;
