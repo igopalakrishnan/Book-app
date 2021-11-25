@@ -31,10 +31,13 @@ router.post('/login', asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (user) {
-        res.status(200).json({
+    if (user && (await user.isPasswordMatch(password))) {
+        res.status(200);
+
+        res.json({
             _id: user._id,
-            name: user.name
+            name: user.name,
+            email: user.email
         })
     } else {
         res.status(401);
