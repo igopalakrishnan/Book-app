@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const dbConnect = () => {
 
-    mongoose.connect('mongodb+srv://gopalakrishna:6EQxzeybyvzQ8o5N@cluster0.r94d2.mongodb.net/book-app?retryWrites=true&w=majority', {
+    mongoose.connect(process.env.MONGODB_URI, {
         //useFindAndModify: true,
         //useCreateIndex: true,
         useUnifiedTopology: true,

@@ -1,10 +1,11 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const router = express.Router();
+const userRouter = express.Router();
 const User = require('../models/User');
+const generateToken = require('../utils/generateToken');
 
 
-router.post('/users/register', asyncHandler(
+userRouter.post('/users/register', asyncHandler(
     async (req, res) => {
 
         const { name, email, password } = req.body;
@@ -20,12 +21,18 @@ router.post('/users/register', asyncHandler(
             email,
             password
         });
-        res.send(userCreated);
+        res.json({
+            _id: userCreated._id,
+            name: userCreated.name,
+            email: userCreated.email,
+            password: userCreated.password,
+            token: generateToken(userCreated._id)
+        })
     }
 ));
 
 
-router.post('/login', asyncHandler(async (req, res) => {
+userRouter.post('/login', asyncHandler(async (req, res) => {
 
     const { email, password } = req.body;
 
@@ -37,7 +44,9 @@ router.post('/login', asyncHandler(async (req, res) => {
         res.json({
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            password: user.password,
+            token: generateToken(user._id)
         })
     } else {
         res.status(401);
@@ -47,4 +56,4 @@ router.post('/login', asyncHandler(async (req, res) => {
 
 }));
 
-module.exports = router;
+module.exports = userRouter;
