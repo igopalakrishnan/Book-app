@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const colors = require('colors');
 
 const dbConnect = () => {
 
@@ -8,7 +9,7 @@ const dbConnect = () => {
         useUnifiedTopology: true,
         useNewUrlParser: true
     })
-        .then(() => console.log('DB Connected.......'))
+        .then(() => console.log('Database Connected.......'.cyan.bold))
         .catch(err => console.log(err));
 }
 
