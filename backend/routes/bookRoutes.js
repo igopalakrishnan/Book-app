@@ -24,7 +24,7 @@ bookRouter.get('/books', expressAsyncHandler(async(req, res) => {
         res.status(200);
         res.json(book);
     }else {
-        res.status(400);
+        res.status(400); 
         throw new Error('There is no books');
     }
 }));
