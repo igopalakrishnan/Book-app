@@ -1,6 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Navbar = () => {
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUserAction } from '../../redux/actions/users/userActions';
+
+const Navbar = props => {
+    const state = useSelector(state => state.userLogin);
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const logoutHandler = () => {
+        dispatch(logoutUserAction());
+        navigate('/');
+    };
+
+    const { userInfo, loading, error } = state;
     return (
         <header>
             <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
@@ -25,190 +40,51 @@ const Navbar = () => {
                                 Home <span className='sr-only'>(current)</span>
                             </a>
                         </li>
-                        <li className='nav-item'>
-                            {/* Modal  */}
-
-                            <button
-                                type='button'
-                                className='btn btn-danger'
-                                data-toggle='modal'
-                                data-target='#about'>
-                                About
-                            </button>
-
-                            <div
-                                className='modal fade'
-                                id='about'
-                                tabIndex='-1'
-                                aria-labelledby='exampleModalLabel'
-                                aria-hidden='true'>
-                                <div className='modal-dialog'>
-                                    <div className='modal-content'>
-                                        <div className='modal-header'>
-                                            <h5 className='modal-title' id='exampleModalLabel'>
-                                                App functionalities
-                                            </h5>
-                                            <button
-                                                type='button'
-                                                className='close'
-                                                data-dismiss='modal'
-                                                aria-label='Close'>
-                                                <span aria-hidden='true'>&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className='modal-body'>
-                                            <ul className='list-group'>
-                                                <li className='list-group-item active'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    Register User
-                                                    <hr />
-                                                </li>
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    Update Profile
-                                                    <hr />
-                                                </li>
-
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    Login
-                                                    <hr />
-                                                </li>
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    User Dashboard
-                                                    <hr />
-                                                </li>
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    List of Users
-                                                    <hr />
-                                                </li>
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    List of Books
-                                                    <hr />
-                                                </li>
-                                                <li className='list-group-item'>
-                                                    <i
-                                                        className='fas fa-clipboard-list text-white mr-3'
-                                                        style={{ fontSize: '1.5rem' }}></i>
-                                                    Many more
-                                                    <hr />
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className='modal-footer'>
-                                            <a
-                                                className='mr-5'
-                                                href='https://github.com/tweneboah'
-                                                target='_'>
-                                                developed by: i-NovoTec
-                                            </a>
-                                            <button
-                                                type='button'
-                                                className='btn btn-danger'
-                                                data-dismiss='modal'>
-                                                Close
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        {/* List menu items */}
-                        <>
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/books'>
-                                    Books
-                                </a>
-                            </li>
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/addbook'>
-                                    Add book
-                                </a>
-                            </li>
-
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/users'>
-                                    Users
-                                </a>
-                            </li>
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/login'>
-                                    Logout
-                                </a>
-                            </li>
-                        </>
-                        {/* Login Register */}
-                        <>
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/login'>
-                                    Login
-                                </a>
-                            </li>
-                            <li className='nav-item'>
-                                <a className='nav-link' href='/register'>
-                                    Register
-                                </a>
-                            </li>
-                        </>
-
-                        {/* Drop dowm */}
-                        {true ? (
-                            <li className='nav-item dropdown'>
-                                <a
-                                    className='nav-link dropdown-toggle btn-dark'
-                                    data-toggle='dropdown'
-                                    href='/'
-                                    role='button'
-                                    aria-haspopup='true'
-                                    aria-expanded='false'></a>
-                                <div className='dropdown-menu'>
-                                    <a className='dropdown-item' href='/profile'>
-                                        Profile
+                        {!userInfo ? (
+                            <>
+                                <li className='nav-item'>
+                                    <a className='nav-link' href='/login'>
+                                        Login
                                     </a>
-                                    <a className='dropdown-item' href='/addbook'>
-                                        Add book
+                                </li>
+                                <li className='nav-item'>
+                                    <a className='nav-link' href='/register'>
+                                        Register
                                     </a>
-                                    <a className='dropdown-item' href='/books'>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className='nav-item'>
+                                    <a className='nav-link' href='/books'>
                                         Books
                                     </a>
+                                </li>
+                                <li className='nav-item'>
+                                    <a className='nav-link' href='/addbook'>
+                                        Add book
+                                    </a>
+                                </li>
 
-                                    <div className='dropdown-divider'></div>
-                                    <button className='dropdown-item'>Logout</button>
-                                </div>
-                            </li>
-                        ) : (
-                            ''
+                                <li className='nav-item'>
+                                    <a className='nav-link' href='/users'>
+                                        Users
+                                    </a>
+                                </li>
+                                <li className='nav-item'>
+                                    <a
+                                        onClick={logoutHandler}
+                                        className='nav-link'
+                                        href='/'>
+                                        Logout
+                                    </a>
+                                </li>
+                            </>
                         )}
                     </ul>
-                    <form className='form-inline my-2 my-lg-0'>
-                        <input
-                            className='form-control mr-sm-2'
-                            type='text'
-                            placeholder='Search'
-                        />
-                        <button className='btn btn-secondary my-2 my-sm-0' type='submit'>
-                            Search
-                        </button>
-                    </form>
                 </div>
             </nav>
         </header>
-        
     );
 };
 

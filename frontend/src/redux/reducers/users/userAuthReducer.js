@@ -1,4 +1,4 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../../actions/actionTypes";
+import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../../actions/actionTypes";
 
 const userReducer = (state = {}, action) => {
     switch (action.type) {
@@ -30,6 +30,11 @@ const userReducer = (state = {}, action) => {
             return {
                 error: action.payload,
             }
+
+            case USER_LOGOUT_SUCCESS:
+                return {
+                    
+                }
 
         default:
             return state;

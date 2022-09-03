@@ -17,7 +17,6 @@ const LoginUser = () => {
     });
 
     const { loading, userInfo, error } = state;
-
    
     const loginUserSubmitHandler = e => {
         e.preventDefault();
