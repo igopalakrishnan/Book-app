@@ -1,11 +1,20 @@
 const express = require('express');
 const expressAsyncHandler = require('express-async-handler');
+const authMiddleware = require('../middleware/authMiddleware');
 const Book = require('../models/Book');
 
 const bookRouter = express.Router();
 
-bookRouter.post('/books', expressAsyncHandler(async(req, res) => {
-    const book = await Book.create(req.body);
+bookRouter.post('/books', authMiddleware, expressAsyncHandler(async(req, res) => {
+
+    const userId = req.user._id
+
+    const book = await Book.create({
+        title: req.body.title,
+        category: req.body.category,
+        createdBy: userId,
+        author: req.body.author,
+    });
 
     if(book) {
         res.status(200);

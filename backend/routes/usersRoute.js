@@ -1,5 +1,7 @@
 const express = require('express');
+const expressAsyncHandler = require('express-async-handler');
 const asyncHandler = require('express-async-handler');
+const authMiddleware = require('../middleware/authMiddleware');
 const userRouter = express.Router();
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
@@ -55,5 +57,71 @@ userRouter.post('/login', asyncHandler(async (req, res) => {
     }
 
 }));
+
+userRouter.put(
+    '/update',
+    authMiddleware,
+    expressAsyncHandler(async (req, res) => {
+        const user = await User.findById(req.user._id);
+
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+            if (req.body.password) {
+                user.password = req.body.password || user.password;
+            }
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                token: generateToken(updatedUser._id),
+            });
+        }
+    })
+);
+
+
+userRouter.delete('/:id', (req, res) => {
+    res.send('Delete route');
+});
+
+
+userRouter.get(
+    '/',
+    authMiddleware,
+    expressAsyncHandler(async (req, res) => {
+        const users = await User.find({});
+
+        if (users) {
+            res.status(200).json(users);
+        } else {
+            res.status(500);
+
+            throw new Error('No users found at the moment');
+        }
+    })
+);
+
+
+userRouter.get('/profile', authMiddleware, asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+            .populate(
+                'books'
+            );
+
+        if (!user) throw new Error("You don't have any profile yet")
+
+        res.status(200)
+        res.send(user);
+    } catch (error) {
+        res.status(500)
+        throw new Error('server')
+    }
+}))
+
 
 module.exports = userRouter;

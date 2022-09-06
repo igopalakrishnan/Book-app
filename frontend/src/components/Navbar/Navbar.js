@@ -72,6 +72,11 @@ const Navbar = props => {
                                     </a>
                                 </li>
                                 <li className='nav-item'>
+                                    <a className='nav-link' href='/profile'>
+                                        Profile
+                                    </a>
+                                </li>
+                                <li className='nav-item'>
                                     <a
                                         onClick={logoutHandler}
                                         className='nav-link'
