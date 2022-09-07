@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const colors = require('colors');
 
-const dbConnect = () => {
+const connectDB = () => {
 
     mongoose.connect(process.env.MONGODB_URI, {
         //useFindAndModify: true,
@@ -13,5 +13,5 @@ const dbConnect = () => {
         .catch(err => console.log(err));
 }
 
-module.exports = dbConnect; 
+module.exports = connectDB; 
 

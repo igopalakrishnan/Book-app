@@ -1,12 +1,15 @@
-require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const routes = require('./routes/userRoutes');
 const error = require('./middleware/errorMiddleware');
 const bookRouter = require('./routes/bookRoutes');
-require('./config/dbConnect')();
-const app = express();
 
+const connectDB = require("./Config/dbConnect");
+const dotenv = require("dotenv");
+
+dotenv.config();
+connectDB();
+const app = express();
 //Routes
 app.use(express.json());
 
