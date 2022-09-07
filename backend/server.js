@@ -14,7 +14,7 @@ app.use('/api/users', routes.userRouter);
 app.use('/api/books', bookRouter.bookRouter);
 
 
-/* const __dirname2 = path.resolve();
+const __dirname2 = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname2, '/uploads')));
 
 if (process.env.NODE_ENV === 'production') {
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
     app.get('/', (req, res) => {
         res.send('API is running....');
     });
-} */
+}
 //====Catch Error
 app.use(error.notfoundErrorMiddleware);
 app.use(error.errorMiddlewareHandler);
