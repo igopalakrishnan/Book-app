@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.css';
-import bookpg from '../../assets/book.jpeg';
+import bookpg from '../../assets/img/book.jpeg';
 import videoSource from '../../assets/books.mp4';
 import { Link } from 'react-router-dom';
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
                     <h1>Book Catolog</h1>
                     <p>Manage your Books with Ease</p>
                     <button type='button' className='btn btn-outline-dark'>
-                        <a href='/register'>Get started</a>
+                        <Link to='/register'>Get started</Link>
                     </button>
                     <img src={bookpg} alt='profile' />
                 </div>

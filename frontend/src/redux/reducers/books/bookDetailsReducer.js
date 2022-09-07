@@ -1,21 +1,21 @@
 import {
-    FETCH_BOOK_FAIL,
-    FETCH_BOOK_REQUEST,
-    FETCH_BOOK_SUCCESS,
+    BOOK_DETAIL_FAIL,
+    BOOK_DETAIL_REQUEST,
+    BOOK_DETAIL_SUCCESS,
 } from '../../actions/actionTypes';
 
-const booksListReducer = (state = [], action) => {
+const bookDetailReducer = (state = {}, action) => {
     switch (action.type) {
-        case FETCH_BOOK_REQUEST:
+        case BOOK_DETAIL_REQUEST:
             return {
                 loading: true,
             };
-        case FETCH_BOOK_SUCCESS:
+        case BOOK_DETAIL_SUCCESS:
             return {
-                books: action.payload,
+                book: action.payload,
                 loading: false,
             };
-        case FETCH_BOOK_FAIL:
+        case BOOK_DETAIL_FAIL:
             return {
                 loading: false,
                 error: action.payload,
@@ -25,4 +25,4 @@ const booksListReducer = (state = [], action) => {
     }
 };
 
-export default booksListReducer;
+export default bookDetailReducer;

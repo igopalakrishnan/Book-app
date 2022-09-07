@@ -1,71 +1,91 @@
 import React, { useEffect } from 'react';
 import './Profile.css';
-import pic from '../../assets/bookpic.jpeg';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfileAction } from '../../redux/actions/users/userActions';
+import pic from '../../assets/img/bookpic.jpeg';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserProfile } from '../../redux/actions/users/userActions';
+import Loading from '../Loading/Loading';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     useEffect(() => {
-        dispatch(getUserProfileAction());
-    }, [dispatch]);
+        dispatch(getUserProfile());
+    }, [dispatch, navigate]);
+    //Check if user is login otherwise redirect
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+    useEffect(() => {
+        if (userInfo === null) navigate('/login');
+    }, [userInfo, navigate]);
 
+    //Get user Profile
     const userProfile = useSelector(state => state.userProfile);
-    const { error, loading, user } = userProfile;
-    return (
-        <>
-            {error && <h2>{error}</h2>}
-            {loading ? (
-                <h3>Loading..</h3>
-            ) : (
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col mt-5'>
-                            <div className='card m-auto ' style={{ width: '50%' }}>
-                                <img src={pic} className='card-img-top' alt='...' />
-                                <div className='card-body'>
-                                    <p className='card-text'>{user?.name}</p>
-                                    <h5 className='card-title'>{user?.email}</h5>
+    const { loading, user } = userProfile;
 
-                                    <Link to='/user-update' className='btn btn-primary'>
-                                        Update your profile
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    const books = userProfile.user && userProfile.user.books;
 
-            )}
-
-            {loading ? (
-                <h1>Loading please wait</h1>
-            ) : (
+    const renderTable = () => {
+        if (books) {
+            return (
                 <table className='table table-hover'>
                     <thead>
                         <tr>
-                            <th scope='col'>Author</th>
                             <th scope='col'>Book Name</th>
+                            <th scope='col'>Author</th>
                             <th scope='col'>Delete</th>
                             <th scope='col'>Update</th>
                         </tr>
                     </thead>
                     <tbody>
-                       {user?.books.map(book => {
-                           <tr className="table-dark">
-                           <th scope='row'>{book.author}</th>
-                           <th > {book.name}</th>
-                           <th >Delete</th>
-                           <th >Update</th>
-                       </tr>
-                       })}
+                        {books.map(book => {
+                            return (
+                                <tr className='table-dark' key={book._id}>
+                                    <th scope='row'>{book.author}</th>
+                                    <td>{book.title}</td>
+                                    <td>Delete</td>
+                                    <td>Update</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
-            )}
+            );
+        } else {
+            return (
+                <>
+                    <h1>You don't have any book created.</h1>
+                    <h1>Start Creating</h1>
+                </>
+            );
+        }
+    };
 
-        </>
+    return (
+        <div className='container'>
+            <div className='row'>
+                <div className='col mt-5'>
+                    {loading && !user ? (
+                        <Loading />
+                    ) : (
+                        <div className='card m-auto ' style={{ width: '50%' }}>
+                            <img src={pic} className='card-img-top' alt='...' />
+                            <div className='card-body'>
+                                <h5 className='card-title'>{user && user.email}</h5>
+                                <p className='card-text'>{user && user.name}</p>
+                                <Link to='/user-update' className='btn btn-primary'>
+                                    Update your profile
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className='row'>
+                <div className='col'>{renderTable()}</div>
+            </div>
+        </div>
     );
 };
 

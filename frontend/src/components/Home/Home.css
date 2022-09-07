@@ -4,16 +4,20 @@
     max-height: 800px;
     overflow: hidden;
     margin-bottom: 500px;
-  }
-  
-  /* Style the video: 100% width and height to cover the entire window */
-  .Video {
+}
+
+
+/* Style the video: 100% width and height to cover the entire window */
+
+.Video {
     width: 100%;
     height: 100%;
-  }
-  
-  /* Add some content at the bottom of the video/page */
-  .Content {
+}
+
+
+/* Add some content at the bottom of the video/page */
+
+.Content {
     position: absolute;
     top: 0;
     color: #f1f1f1;
@@ -24,16 +28,19 @@
     justify-content: center;
     align-items: center;
     padding: 0;
-  }
-  .SubContent {
+}
+
+.SubContent {
     text-align: center;
     padding: 10px;
-  }
-  .SubContent p {
+}
+
+.SubContent p {
     color: #eeeeeead;
     font-size: 1.3rem;
-  }
-  .SubContent button {
+}
+
+.SubContent button {
     font-weight: bold;
     margin-top: 30px;
     color: #f1f1f1;
@@ -42,17 +49,18 @@
     background-color: hsla(0, 0%, 0%, 0);
     font-size: 1.25rem;
     border-radius: 5px;
-  }
-  .SubContent button:hover {
+}
+
+.SubContent button:hover {
     background-color: #f1f1f1;
     color: #000000c0;
-  }
-  
-  .SubContent img {
+}
+
+.SubContent img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     display: block;
     margin: 15px auto;
     border: #f1f1f1 1px solid;
-  }
+}
