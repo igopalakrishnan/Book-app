@@ -126,12 +126,7 @@ const Header = () => {
                                             </ul>
                                         </div>
                                         <div className='modal-footer'>
-                                            <a
-                                                className='mr-5'
-                                                href='https://github.com/tweneboah'
-                                                target='_'>
-                                                developed by: i-NovoTec
-                                            </a>
+                                            
                                             <button
                                                 type='button'
                                                 className='btn btn-danger'
